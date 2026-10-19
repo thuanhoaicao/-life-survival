@@ -1,1 +1,434 @@
 
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LIFE SURVIVAL</title>
+<style>
+:root{color-scheme:dark;--bg:#101820;--card:#1c2935;--accent:#70e0ad;--muted:#a9bbc8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#f4f7fa;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+header{padding:24px 18px;background:#172b38;border-bottom:1px solid #354653}
+h1{margin:0;color:var(--accent);font-size:27px;letter-spacing:2px}
+header p{color:var(--muted);margin-bottom:0}
+main{max-width:760px;margin:auto;padding:16px}
+.card{background:var(--card);padding:17px;border-radius:15px;margin-bottom:14px;border:1px solid #344654}
+h2{font-size:21px;margin-top:0}
+.muted{color:var(--muted);font-size:14px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#101c26;padding:12px;border-radius:10px}
+.stat strong{display:block;margin-bottom:8px}
+progress{width:100%;height:12px;accent-color:var(--accent)}
+button{width:100%;padding:14px;margin-top:9px;border:0;border-radius:10px;background:var(--accent);color:#10221a;font-size:16px;font-weight:700}
+button.secondary{background:#344957;color:white}
+button:disabled{opacity:.4}
+.choice{text-align:left;background:#293c4a;color:white;border:1px solid #496171}
+.choice small{display:block;color:#c4d3dc;font-weight:400;margin-top:6px}
+.notice{padding:12px;border-radius:10px;background:#253d3a;color:#d9fff0}
+.error{color:#ffb8b8;white-space:pre-wrap}
+footer{text-align:center;padding:18px;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>LIFE SURVIVAL</h1>
+  <p>Mỗi năm là một câu chuyện. Mỗi lựa chọn đều có cái giá của nó.</p>
+</header>
+<main>
+  <section class="card">
+    <div id="status" class="muted">Đang tải dữ liệu...</div>
+    <h2 id="yearTitle">Năm 1</h2>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <section class="card">
+    <div class="muted" id="storyType">CỐT TRUYỆN</div>
+    <h2 id="storyTitle">Đang chuẩn bị...</h2>
+    <p id="storySummary">Đang đọc kho dữ liệu của bạn.</p>
+    <p class="muted" id="storyMeta"></p>
+  </section>
+
+  <section class="card">
+    <h2>Bạn sẽ làm gì?</h2>
+    <div id="choices"></div>
+  </section>
+
+  <section class="card" id="resultCard" hidden>
+    <h2 id="resultTitle">Kết quả</h2>
+    <p id="resultText"></p>
+    <button id="nextBtn">Bước sang năm tiếp theo</button>
+  </section>
+
+  <section class="card">
+    <h2>Tiến trình</h2>
+    <p id="history" class="muted">Chưa có lựa chọn nào.</p>
+    <button class="secondary" id="resetBtn">Bắt đầu lại từ đầu</button>
+  </section>
+
+  <p id="error" class="error"></p>
+</main>
+<footer>LIFE SURVIVAL · Bản thử nghiệm cá nhân</footer>
+
+<script>
+const FILES = {
+  stories: "Stories.csv",
+  choices: "Choices.csv",
+  endings: "Endings.csv"
+};
+
+const initialState = () => ({
+  year: 1,
+  age: 18,
+  health: 80,
+  energy: 80,
+  food: 70,
+  water: 70,
+  money: 50,
+  mood: 70,
+  currentStoryId: null,
+  usedStories: [],
+  history: [],
+  endedYear: false
+});
+
+let data = { stories: [], choices: [], endings: [] };
+let state = null;
+
+function normalize(s) {
+  return String(s ?? "")
+    .replace(/^\uFEFF/, "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d").replace(/Đ/g, "D")
+    .toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function parseCSV(text) {
+  text = text.replace(/^\uFEFF/, "");
+  const rows = [];
+  let row = [], field = "", quoted = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+
+    if (quoted) {
+      if (c === '"' && text[i + 1] === '"') {
+        field += '"'; i++;
+      } else if (c === '"') {
+        quoted = false;
+      } else {
+        field += c;
+      }
+    } else if (c === '"' && field === "") {
+      quoted = true;
+    } else if (c === ",") {
+      row.push(field); field = "";
+    } else if (c === "\n" || c === "\r") {
+      if (c === "\r" && text[i + 1] === "\n") i++;
+      row.push(field); field = "";
+      if (row.some(v => v.trim() !== "")) rows.push(row);
+      row = [];
+    } else {
+      field += c;
+    }
+  }
+
+  if (field !== "" || row.length) {
+    row.push(field);
+    if (row.some(v => v.trim() !== "")) rows.push(row);
+  }
+
+  if (!rows.length) return [];
+  const headers = rows.shift().map(h => h.trim());
+
+  return rows.map(values => {
+    const obj = {};
+    headers.forEach((h, i) => obj[h] = (values[i] ?? "").trim());
+    return obj;
+  });
+}
+
+function value(row, ...names) {
+  if (!row) return "";
+  const keys = Object.keys(row);
+  for (const name of names) {
+    const wanted = normalize(name);
+    const key = keys.find(k => normalize(k) === wanted);
+    if (key && row[key] !== "") return row[key];
+  }
+  return "";
+}
+
+function storyId(row) {
+  return value(row, "story_id", "story id");
+}
+
+function parseJSON(text) {
+  if (!text) return null;
+  try { return JSON.parse(text); } catch { return null; }
+}
+
+async function loadCSV(filename) {
+  const response = await fetch(filename + "?v=1", {cache:"no-store"});
+  if (!response.ok) {
+    throw new Error("Không đọc được " + filename +
+      ". Hãy kiểm tra tên file và vị trí trong GitHub.");
+  }
+  return parseCSV(await response.text());
+}
+
+async function start() {
+  document.getElementById("error").textContent = "";
+  document.getElementById("status").textContent = "Đang tải ba file CSV...";
+
+  try {
+    const [stories, choices, endings] = await Promise.all([
+      loadCSV(FILES.stories),
+      loadCSV(FILES.choices),
+      loadCSV(FILES.endings)
+    ]);
+
+    if (!stories.length || !choices.length || !endings.length) {
+      throw new Error("Có file CSV chưa có dữ liệu hoặc tiêu đề cột.");
+    }
+
+    data = {stories, choices, endings};
+    const saved = localStorage.getItem("lifeSurvivalSave");
+    state = saved ? JSON.parse(saved) : initialState();
+
+    document.getElementById("status").textContent =
+      `Đã tải ${stories.length} cốt truyện · ${choices.length} lựa chọn · ${endings.length} kết thúc`;
+
+    if (!state.currentStoryId || state.endedYear) {
+      if (!state.endedYear) chooseStory();
+    }
+    render();
+  } catch (err) {
+    document.getElementById("status").textContent = "Chưa thể tải dữ liệu";
+    document.getElementById("error").textContent =
+      err.message + "\n\nHãy kiểm tra lại tên ba file CSV và xem chúng có nằm cùng thư mục với index.html không.";
+  }
+}
+
+function save() {
+  localStorage.setItem("lifeSurvivalSave", JSON.stringify(state));
+}
+
+function chooseStory() {
+  const available = data.stories.filter(s => {
+    const id = storyId(s);
+    const min = Number(value(s, "tuổi tối thiểu", "tuoi toi thieu") || 0);
+    const max = Number(value(s, "tuổi tối đa", "tuoi toi da") || 999);
+    return id && !state.usedStories.includes(id) &&
+      state.age >= min && state.age <= max;
+  });
+
+  const pool = available.length ? available : data.stories.filter(s =>
+    storyId(s) && !state.usedStories.includes(storyId(s))
+  );
+
+  if (!pool.length) {
+    state.usedStories = [];
+    const all = data.stories;
+    state.currentStoryId = storyId(all[Math.floor(Math.random()*all.length)]);
+  } else {
+    const selected = pool[Math.floor(Math.random() * pool.length)];
+    state.currentStoryId = storyId(selected);
+  }
+
+  state.usedStories.push(state.currentStoryId);
+  state.endedYear = false;
+  save();
+}
+
+function currentStory() {
+  return data.stories.find(s => storyId(s) === state.currentStoryId);
+}
+
+function clamp(n) {
+  return Math.max(0, Math.min(100, n));
+}
+
+function applyEffects(text) {
+  const effects = parseJSON(text);
+  if (!effects || typeof effects !== "object") return;
+
+  const aliases = {
+    health:["health","suc_khoe","suc_khoe","máu"],
+    energy:["energy","nang_luong","the_luc"],
+    food:["food","thuc_an","luong_thuc"],
+    water:["water","nuoc"],
+    money:["money","tien","tai_chinh"],
+    mood:["mood","tinh_than","hanh_phuc"]
+  };
+
+  function walk(obj) {
+    if (!obj || typeof obj !== "object") return;
+    for (const [key, val] of Object.entries(obj)) {
+      const k = normalize(key);
+      const stat = Object.keys(aliases).find(s =>
+        aliases[s].some(a => normalize(a) === k)
+      );
+
+      if (stat && typeof val === "number") {
+        state[stat] = clamp(state[stat] + val);
+      } else if (stat && val && typeof val === "object") {
+        const amount = Number(val.change ?? val.delta ?? val.add ?? 0);
+        if (Number.isFinite(amount)) state[stat] = clamp(state[stat] + amount);
+      } else if (val && typeof val === "object") {
+        walk(val);
+      }
+    }
+  }
+  walk(effects);
+}
+
+function renderStats() {
+  const labels = {
+    health:"Sức khỏe", energy:"Thể lực", food:"Thức ăn",
+    water:"Nước", money:"Tiền bạc", mood:"Tinh thần"
+  };
+  document.getElementById("stats").innerHTML =
+    Object.entries(labels).map(([key,label]) => `
+      <div class="stat">
+        <strong>${label}: ${state[key]}</strong>
+        <progress max="100" value="${state[key]}"></progress>
+      </div>`).join("");
+}
+
+function render() {
+  if (!state) return;
+  renderStats();
+
+  document.getElementById("yearTitle").textContent =
+    `Năm ${state.year} · Tuổi ${state.age}`;
+
+  const story = currentStory();
+  if (!story) {
+    document.getElementById("error").textContent =
+      "Không tìm thấy cốt truyện. Hãy kiểm tra cột story_id trong Stories.csv.";
+    return;
+  }
+
+  document.getElementById("storyTitle").textContent =
+    value(story, "tiêu đề", "tieu de", "title") || state.currentStoryId;
+  document.getElementById("storyType").textContent =
+    value(story, "loại", "loai", "type") || "CỐT TRUYỆN";
+  document.getElementById("storySummary").textContent =
+    value(story, "bản tóm tắt", "ban tom tat", "summary", "mô tả", "mo ta") ||
+    "Bạn đang đứng trước một bước ngoặt. Hãy cân nhắc lựa chọn của mình.";
+  document.getElementById("storyMeta").textContent =
+    "Mã truyện: " + state.currentStoryId;
+
+  const choices = data.choices.filter(c =>
+    value(c, "story_id", "story id") === state.currentStoryId
+  );
+
+  const holder = document.getElementById("choices");
+  holder.innerHTML = "";
+
+  if (state.endedYear) {
+    holder.textContent = "Bạn đã hoàn thành năm này.";
+    return;
+  }
+
+  if (!choices.length) {
+    holder.textContent = "Chưa tìm thấy lựa chọn cho cốt truyện này.";
+    return;
+  }
+
+  choices.forEach((choice, i) => {
+    const btn = document.createElement("button");
+    btn.className = "choice";
+    btn.textContent = (i + 1) + ". " +
+      (value(choice, "văn bản lựa chọn", "van ban lua chon", "choice") ||
+       value(choice, "choice_id", "choice id") || "Lựa chọn");
+
+    const risk = value(choice, "rủi ro", "rui ro", "risk");
+    if (risk) {
+      const small = document.createElement("small");
+      small.textContent = "Rủi ro: " + risk;
+      btn.appendChild(small);
+    }
+    btn.onclick = () => makeChoice(choice);
+    holder.appendChild(btn);
+  });
+}
+
+function makeChoice(choice) {
+  if (state.endedYear) return;
+
+  applyEffects(value(choice, "effects_json", "effects json"));
+  state.history.push({
+    year: state.year,
+    story: state.currentStoryId,
+    choice: value(choice, "văn bản lựa chọn", "van ban lua chon", "choice") ||
+      value(choice, "choice_id", "choice id")
+  });
+
+  const endings = data.endings.filter(e =>
+    value(e, "story_id", "story id") === state.currentStoryId
+  );
+
+  let ending = null;
+  if (endings.length) {
+    ending = endings[Math.floor(Math.random() * endings.length)];
+  }
+
+  document.getElementById("resultCard").hidden = false;
+  document.getElementById("resultTitle").textContent =
+    ending ? value(ending, "tiêu đề kết thúc", "tieu de ket thuc", "title") ||
+      "Kết thúc năm " + state.year : "Năm " + state.year + " đã khép lại";
+
+  document.getElementById("resultText").textContent =
+    ending ? value(ending, "kết quả", "ket qua", "result") ||
+      "Lựa chọn của bạn đã để lại dấu ấn." :
+      "Bạn đã đưa ra lựa chọn. Hãy chuẩn bị cho năm tiếp theo.";
+
+  const flag = ending ? value(ending, "cờ chuyển tiếp", "co chuyen tiep") : "";
+  if (flag) {
+    document.getElementById("resultText").textContent +=
+      "\nCờ chuyển tiếp: " + flag;
+  }
+
+  state.endedYear = true;
+  save();
+  renderStats();
+  document.getElementById("choices").innerHTML = "";
+  document.getElementById("history").textContent =
+    state.history.slice(-5).map(h =>
+      `Năm ${h.year}: ${h.story} — ${h.choice}`
+    ).join("\n") || "Chưa có lựa chọn nào.";
+  document.getElementById("history").style.whiteSpace = "pre-line";
+}
+
+document.getElementById("nextBtn").onclick = () => {
+  state.year++;
+  state.age++;
+  state.currentStoryId = null;
+  state.endedYear = false;
+  document.getElementById("resultCard").hidden = true;
+
+  ["health","energy","food","water","money","mood"].forEach(k => {
+    state[k] = clamp(state[k] - 2);
+  });
+
+  chooseStory();
+  render();
+};
+
+document.getElementById("resetBtn").onclick = () => {
+  if (!confirm("Bạn có chắc muốn xóa tiến trình trên thiết bị này và chơi lại từ đầu?")) return;
+  localStorage.removeItem("lifeSurvivalSave");
+  state = initialState();
+  document.getElementById("resultCard").hidden = true;
+  chooseStory();
+  render();
+};
+
+start();
+</script>
+</body>
+</html>
+
