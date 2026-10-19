@@ -243,7 +243,11 @@ function chooseStory() {
 }
 
 function currentStory() {
-  return data.stories.find(s => storyId(s) === state.currentStoryId);
+  const currentId = String(state.currentStoryId || "").trim();
+
+  return data.stories.find(s => {
+    return String(storyId(s) || "").trim() === currentId;
+  });
 }
 
 function clamp(n) {
