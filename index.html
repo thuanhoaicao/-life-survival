@@ -321,9 +321,15 @@ function render() {
   document.getElementById("storyMeta").textContent =
     "Mã truyện: " + state.currentStoryId;
 
-  const choices = data.choices.filter(c =>
-    value(c, "story_id", "story id") === state.currentStoryId
-  );
+  const currentId = String(state.currentStoryId || "").trim();
+
+const choices = data.choices.filter(c => {
+  const choiceStoryId = String(
+    value(c, "story_id", "story id") || ""
+  ).trim();
+
+  return choiceStoryId === currentId;
+});
 
   const holder = document.getElementById("choices");
   holder.innerHTML = "";
