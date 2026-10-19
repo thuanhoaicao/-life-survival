@@ -350,11 +350,23 @@ const choices = data.choices.filter(c => {
 
   choices.forEach((choice, i) => {
     const btn = document.createElement("button");
-    btn.className = "choice";
-    btn.textContent = (i + 1) + ". " +
-      (value(choice, "văn bản lựa chọn", "van ban lua chon", "choice") ||
-       value(choice, "choice_id", "choice id") || "Lựa chọn");
+    btn.className = "choice";const choiceText = value(
+  choice,
+  "văn bản lựa chọn",
+  "van ban lua chon",
+  "nội dung lựa chọn",
+  "noi dung lua chon",
+  "tên lựa chọn",
+  "ten lua chon",
+  "choice_text",
+  "choice text",
+  "text",
+  "description",
+  "choice"
+);
 
+btn.textContent = (i + 1) + ". " +
+  (choiceText || value(choice, "choice_id", "choice id") || "Lựa chọn"); || "Lựa chọn");
     const risk = value(choice, "rủi ro", "rui ro", "risk");
     if (risk) {
       const small = document.createElement("small");
