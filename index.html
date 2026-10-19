@@ -28,9 +28,7 @@ button:disabled{opacity:0.3;cursor:not-allowed}
 .choice{text-align:left;background:#1f2933;color:#f0f6fc;border:1px solid #374151}
 .choice:hover:not(:disabled){background:#2d3748}
 .choice small{display:block;color:#9ca3af;font-weight:400;margin-top:4px}
-.gameover{background:#2d1517;border-color:#7f1d1d}
-.gameover h2{color:var(--danger)}
-.error{color:var(--danger);white-space:pre-wrap;font-size:14px}
+.error{color:var(--danger);white-space:pre-wrap;font-size:14px;background:#2d1517;padding:10px;border-radius:8px;border:1px solid #7f1d1d;margin-top:10px}
 footer{text-align:center;padding:16px;color:var(--muted);font-size:12px}
 </style>
 </head>
@@ -51,7 +49,7 @@ footer{text-align:center;padding:16px;color:var(--muted);font-size:12px}
   <section class="card" id="storyCard">
     <div class="muted" id="storyType">CỐT TRUYỆN</div>
     <h2 id="storyTitle">Đang tải...</h2>
-    <p id="storySummary">Đang phân tích dữ liệu từ máy chủ...</p>
+    <p id="storySummary">Đang phân tích dữ liệu từ kho lưu trữ...</p>
     <p class="muted" id="storyMeta"></p>
   </section>
 
@@ -66,7 +64,7 @@ footer{text-align:center;padding:16px;color:var(--muted);font-size:12px}
     <button id="nextBtn">Tiếp tục hành trình sang năm sau</button>
   </section>
 
-  <section class="card" id="gameOverCard" hidden class="gameover" style="border-color: #7f1d1d; background: #221113;">
+  <section class="card" id="gameOverCard" hidden style="border-color: #7f1d1d; background: #221113;">
     <h2 style="color: var(--danger);">💀 BẠN ĐÃ GỤC NGÃ</h2>
     <p id="gameOverReason">Hành trình sinh tồn của bạn đã kết thúc do kiệt quệ tài nguyên.</p>
     <button class="secondary" id="restartBtn" style="background:#7f1d1d; color:white;">Chơi lại từ đầu</button>
@@ -78,15 +76,16 @@ footer{text-align:center;padding:16px;color:var(--muted);font-size:12px}
     <button class="secondary" id="resetBtn">Đặt lại toàn bộ dữ liệu</button>
   </section>
 
-  <p id="error" class="error"></p>
+  <div id="error" class="error" hidden></div>
 </main>
-<footer>LIFE SURVIVAL · Advanced GitHub Edition</footer>
+<footer>LIFE SURVIVAL · GitHub Pages Edition</footer>
 
 <script>
+// Khớp chính xác với tên 3 tệp Glide_*.csv trên kho GitHub của bạn
 const FILES = {
-  stories: "Stories.csv",
-  choices: "Choices.csv",
-  endings: "Endings.csv"
+  stories: "Glide_Stories.csv",
+  choices: "Glide_Choices.csv",
+  endings: "Glide_Endings.csv"
 };
 
 const initialState = () => ({
@@ -178,14 +177,16 @@ function parseJSON(text) {
 async function loadCSV(filename) {
   const response = await fetch(filename + "?v=" + Date.now(), {cache:"no-store"});
   if (!response.ok) {
-    throw new Error("Không thể tải file " + filename + ". Hãy chắc chắn file tồn tại cùng thư mục trên GitHub.");
+    throw new Error("Không thể tải tệp: " + filename + " (Mã lỗi: " + response.status + "). Hãy kiểm tra lại tên tệp trên GitHub có khớp hoàn toàn không.");
   }
   return parseCSV(await response.text());
 }
 
 async function start() {
-  document.getElementById("error").textContent = "";
-  document.getElementById("status").textContent = "Đang tải cơ sở dữ liệu cốt truyện...";
+  const statusEl = document.getElementById("status");
+  const errorEl = document.getElementById("error");
+  errorEl.hidden = true;
+  statusEl.textContent = "Đang tải dữ liệu từ 3 tệp CSV...";
 
   try {
     const [stories, choices, endings] = await Promise.all([
@@ -195,28 +196,28 @@ async function start() {
     ]);
 
     if (!stories.length || !choices.length || !endings.length) {
-      throw new Error("Một trong các tệp CSV đang bị trống hoặc sai định dạng tiêu đề.");
+      throw new Error("Một trong các tệp CSV đang trống hoặc không có dòng tiêu đề hợp lệ.");
     }
 
     data = {stories, choices, endings};
-    const saved = localStorage.getItem("lifeSurvivalSave_v2");
+    const saved = localStorage.getItem("lifeSurvivalSave_v3");
     state = saved ? JSON.parse(saved) : initialState();
 
-    document.getElementById("status").textContent =
-      `Đã tải thành công: ${stories.length} cốt truyện · ${choices.length} lựa chọn · ${endings.length} kết thúc`;
+    statusEl.textContent = `Đã tải thành công: ${stories.length} cốt truyện · ${choices.length} lựa chọn · ${endings.length} kết thúc`;
 
     if (!state.currentStoryId || state.endedYear) {
       if (!state.endedYear && !state.isGameOver) chooseStory();
     }
     render();
   } catch (err) {
-    document.getElementById("status").textContent = "Lỗi kết nối dữ liệu";
-    document.getElementById("error").textContent = err.message;
+    statusEl.textContent = "Lỗi khi tải dữ liệu!";
+    errorEl.textContent = err.message;
+    errorEl.hidden = false;
   }
 }
 
 function save() {
-  localStorage.setItem("lifeSurvivalSave_v2", JSON.stringify(state));
+  localStorage.setItem("lifeSurvivalSave_v3", JSON.stringify(state));
 }
 
 function chooseStory() {
@@ -259,11 +260,11 @@ function checkGameOver() {
   if (state.health <= 0) {
     triggerGameOver("Sức khỏe của bạn đã cạn kiệt hoàn toàn.");
   } else if (state.food <= 0) {
-    triggerGameOver("Bạn đã chết đói sau thời gian dài thiếu lương thực.");
+    triggerGameOver("Bạn đã chết đói do thiếu lương thực trầm trọng.");
   } else if (state.water <= 0) {
-    triggerGameOver("Bạn đã gục ngã do mất nước trầm trọng.");
+    triggerGameOver("Bạn đã gục ngã do mất nước.");
   } else if (state.energy <= 0) {
-    triggerGameOver("Thể lực kiệt quệ khiến bạn không thể tiếp tục chống chọi.");
+    triggerGameOver("Thể lực kiệt quệ khiến bạn không thể tiếp tục.");
   }
 }
 
@@ -341,7 +342,8 @@ function render() {
 
   const story = currentStory();
   if (!story) {
-    document.getElementById("error").textContent = "Không tìm thấy cốt truyện tương ứng với ID hiện tại.";
+    document.getElementById("error").textContent = "Không tìm thấy cốt truyện tương ứng với ID hiện tại trong Glide_Stories.csv.";
+    document.getElementById("error").hidden = false;
     return;
   }
 
@@ -362,7 +364,7 @@ function render() {
   }
 
   if (!choices.length) {
-    holder.textContent = "Không tìm thấy lựa chọn nào cho cốt truyện này.";
+    holder.textContent = "Không tìm thấy lựa chọn nào cho cốt truyện này trong Glide_Choices.csv.";
     return;
   }
 
@@ -440,7 +442,6 @@ document.getElementById("nextBtn").onclick = () => {
   state.endedYear = false;
   document.getElementById("resultCard").hidden = true;
 
-  // Hao hụt tài nguyên sinh tồn tự nhiên theo thời gian năm tháng
   ["health","energy","food","water","money","mood"].forEach(k => {
     const drain = (k === "money" || k === "mood") ? 1 : 3;
     state[k] = clamp(state[k] - drain);
@@ -456,7 +457,7 @@ document.getElementById("nextBtn").onclick = () => {
 document.getElementById("restartBtn").onclick =
 document.getElementById("resetBtn").onclick = () => {
   if (!confirm("Bạn có chắc chắn muốn xóa sạch tiến trình hiện tại để chơi lại từ đầu không?")) return;
-  localStorage.removeItem("lifeSurvivalSave_v2");
+  localStorage.removeItem("lifeSurvivalSave_v3");
   state = initialState();
   document.getElementById("resultCard").hidden = true;
   document.getElementById("gameOverCard").hidden = true;
