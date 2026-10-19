@@ -1,0 +1,49 @@
+﻿ending_id,story_id,ending_title,conditions,result,carryover_flags
+LS-001-E1,LS-001,Gia đình cùng giải quyết,có trao đổi minh bạch; có kế hoạch thanh toán khả thi,Khoản nợ được xử lý theo lộ trình. Nhân vật mất một phần nguồn lực nhưng gia đình có cơ hội khôi phục lòng tin.,FLAG_LS001_PLAN_CREATED
+LS-001-E2,LS-001,Sự thật muộn màng,che giấu thông tin hoặc chỉ xử lý phần ngọn,Khủng hoảng tạm lắng rồi quay lại khi khoản nợ và nguyên nhân chưa được giải quyết.,FLAG_FAMILY_SECRET_DEBT
+LS-001-E3,LS-001,Ranh giới đau đớn,nhân vật từ chối gánh nợ hoặc yêu cầu trách nhiệm rõ ràng,Quan hệ căng thẳng nhưng trách nhiệm được phân định. Mối quan hệ có thể phục hồi nếu các bên tôn trọng ranh giới.,FLAG_FAMILY_BOUNDARY_SET
+LS-001-E4,LS-001,Gánh nặng truyền đời,nợ tiếp tục tăng và không có kế hoạch khả thi,"Tài chính gia đình suy giảm, ảnh hưởng đến lựa chọn ở năm sau.",FLAG_FAMILY_DEBT_UNRESOLVED
+LS-002-E1,LS-002,Thỏa thuận trong gia đình,các bên chịu lắng nghe,Anh em thống nhất cách giải quyết và thừa nhận những đóng góp khác nhau.,FLAG_SIBLING_TRUST_PRESERVED
+LS-002-E2,LS-002,Chiến thắng trên giấy tờ,quy trình pháp lý làm rõ quyền lợi,Quyền sở hữu được xác định nhưng quan hệ có thể xa cách lâu dài.,FLAG_INHERITANCE_LEGAL_ROUTE
+LS-002-E3,LS-002,Di sản tinh thần,nhân vật chấp nhận mất lợi ích vật chất,"Tranh chấp giảm nhiệt, nhưng việc hòa giải còn phụ thuộc vào lựa chọn của người khác.",FLAG_INHERITANCE_WAIVED
+LS-002-E4,LS-002,Mất cả hai,xung đột kéo dài và chi phí tăng,Tài sản và lòng tin đều bị bào mòn; một mối quan hệ quan trọng bị tổn thương.,FLAG_SIBLING_RIFT
+LS-003-E1,LS-003,Người ở lại,nhân vật tự gánh phần lớn việc chăm sóc,Người thân được chăm sóc nhưng nhân vật có nguy cơ kiệt sức và mất ổn định tài chính.,FLAG_CAREGIVER_STRAIN
+LS-003-E2,LS-003,Chăm sóc có giới hạn,trách nhiệm được chia sẻ hoặc có hỗ trợ,Gánh nặng được phân phối tốt hơn; gia đình học cách nói rõ nhu cầu và giới hạn.,FLAG_CARE_PLAN_CREATED
+LS-003-E3,LS-003,Kiệt sức,nhân vật bỏ qua nhu cầu của bản thân trong thời gian dài,Nhân vật không còn đủ sức duy trì cách chăm sóc cũ và phải tìm phương án khác.,FLAG_CAREGIVER_BURNOUT
+LS-003-E4,LS-003,Một mạng lưới mới,hỗ trợ bên ngoài được tìm thấy,"Một nhóm hỗ trợ mới hình thành, nhưng việc tiếp cận dịch vụ vẫn có thể bị giới hạn bởi nguồn lực.",FLAG_SOCIAL_SUPPORT_NETWORK
+LS-004-E1,LS-004,Tái sinh,dịch vụ phù hợp thị trường và quản lý tốt,Cửa hàng tìm được nhóm khách hàng ổn định mới; quá trình phục hồi cần thời gian.,FLAG_BUSINESS_PIVOT_SUCCESS
+LS-004-E2,LS-004,Chiến thắng ngắn hạn,lượng khách tăng nhưng biên lợi nhuận giảm,Doanh thu nhích lên nhưng tiền mặt vẫn yếu; khủng hoảng có thể quay lại.,FLAG_LOW_MARGIN_BUSINESS
+LS-004-E3,LS-004,Cánh cửa khép lại,nhân vật đóng cửa hoặc đạt thỏa thuận rút lui,"Công việc cũ kết thúc, nhưng nhân vật bảo toàn được một phần nguồn lực và có thể tái định hướng.",FLAG_BUSINESS_CLOSED_ORDERLY
+LS-004-E4,LS-004,Càng cố càng lún sâu,vay thêm mà không xử lý nguyên nhân gốc,Nợ tăng và khả năng phục hồi giảm.,FLAG_BUSINESS_DEBT_CRISIS
+LS-005-E1,LS-005,Cái giá của thành công,sai lệch được che giấu và chưa bị phát hiện,Nhân vật được lợi ngắn hạn nhưng phải đối mặt với rủi ro tiếp diễn và áp lực duy trì lời nói dối.,FLAG_WORKPLACE_MISCONDUCT_HIDDEN
+LS-005-E2,LS-005,Người giữ nguyên tắc,nhân vật giữ được bằng chứng và bảo vệ quy trình,Nhân vật giữ được sự chính trực nhưng kết quả nghề nghiệp chưa chắc thuận lợi ngay lập tức.,FLAG_WORKPLACE_INTEGRITY
+LS-005-E3,LS-005,Sự thật được xác minh,có chứng cứ và quy trình xử lý phù hợp,Sai phạm có thể được xử lý; kết quả phụ thuộc tổ chức và độ tin cậy của thông tin.,FLAG_WORKPLACE_REVIEW
+LS-005-E4,LS-005,Người tố cáo bị cô lập,tổ chức phản ứng tiêu cực hoặc thiếu bảo vệ,"Nhân vật chịu sức ép và phải cân nhắc phương án bảo vệ bản thân, tìm tư vấn hoặc chuyển việc.",FLAG_WORKPLACE_RETALIATION_RISK
+LS-006-E1,LS-006,Đối tác trưởng thành,hai bên đồng ý nguyên tắc minh bạch,"Vai trò và quyền quyết định rõ ràng hơn, giúp quan hệ có cơ hội ổn định.",FLAG_PARTNERSHIP_GOVERNANCE
+LS-006-E2,LS-006,Bạn bè xa lạ,công việc được tách nhưng cảm xúc chưa giải quyết,Trách nhiệm kinh doanh được làm rõ nhưng tình bạn phai nhạt.,FLAG_FRIENDSHIP_DISTANCED
+LS-006-E3,LS-006,Thành công đơn độc,nhân vật tiếp tục riêng,Nhân vật có quyền tự chủ hơn nhưng mất một người từng quan trọng.,FLAG_SOLO_PATH
+LS-006-E4,LS-006,Bài học đắt giá,thiếu minh bạch tiếp diễn,Tranh chấp làm hao hụt tiền bạc và lòng tin.,FLAG_PARTNERSHIP_DISPUTE
+LS-007-E1,LS-007,Khu phố sống sót,có phối hợp và ưu tiên an toàn,Nhiều người đến được nơi an toàn; thiệt hại tài sản vẫn có thể xảy ra.,FLAG_COMMUNITY_COOPERATION
+LS-007-E2,LS-007,Những người được cứu,một số người được ưu tiên nhưng nguồn lực không đủ,Nhân vật vượt qua biến cố với những tổn thất và câu hỏi đạo đức còn lại.,FLAG_DISASTER_LOSSES
+LS-007-E3,LS-007,Mạnh ai nấy sống,phối hợp thất bại và nguồn lực bị giữ riêng,Một số tài sản được bảo toàn nhưng lòng tin cộng đồng giảm.,FLAG_COMMUNITY_DISTRUST
+LS-007-E4,LS-007,Người tổ chức,nhân vật điều phối hiệu quả,Nhân vật có uy tín mới nhưng cũng gánh trách nhiệm về các quyết định khó khăn.,FLAG_LOCAL_LEADERSHIP
+LS-008-E1,LS-008,Niềm tin được xây dựng,quy trình minh bạch và có giải trình,Người dân hiểu hơn về tiêu chí phân phối dù nguồn lực vẫn thiếu.,FLAG_AID_TRANSPARENCY
+LS-008-E2,LS-008,Người thân được ưu tiên,ngoại lệ cá nhân không được giải trình,Một mối quan hệ được bảo vệ nhưng uy tín của nhân vật bị tổn hại.,FLAG_AID_FAVORITISM
+LS-008-E3,LS-008,Quyết định gây tranh cãi,tiêu chí ưu tiên chưa rõ hoặc dữ liệu thiếu,Một số nhu cầu được đáp ứng nhưng các hộ khác cảm thấy bị bỏ rơi.,FLAG_AID_DISPUTE
+LS-008-E4,LS-008,Hệ thống tốt hơn,có giám sát và sửa quy trình,Cộng đồng thiết lập cách đánh giá nhu cầu và xử lý khiếu nại tốt hơn.,FLAG_AID_SYSTEM_IMPROVED
+LS-009-E1,LS-009,Sự thật được xác minh,có bằng chứng đáng tin cậy,Cộng đồng có cơ sở điều chỉnh nhận định; mức độ phục hồi danh dự còn phụ thuộc hành động sửa sai.,FLAG_RUMOR_VERIFIED
+LS-009-E2,LS-009,Danh dự không thể phục hồi ngay,tin đồn đã gây thiệt hại lớn,"Dù thông tin được làm rõ, tác động xã hội và kinh tế vẫn kéo dài.",FLAG_REPUTATION_DAMAGE
+LS-009-E3,LS-009,Im lặng có hệ quả,nhân vật đứng ngoài khi chưa có thông tin,Nhân vật tránh kết luận vội nhưng người bị nghi ngờ có thể thiếu hỗ trợ trong giai đoạn đầu.,FLAG_COMMUNITY_HESITATION
+LS-009-E4,LS-009,Cộng đồng học được bài học,quy trình xác minh được cải thiện,Cộng đồng xây dựng nguyên tắc kiểm chứng thông tin và xử lý khiếu nại.,FLAG_RUMOR_PROTOCOL
+LS-010-E1,LS-010,Hai người cùng lớn lên,giao tiếp và kế hoạch phù hợp với cả hai,Mối quan hệ tiếp tục trong khi mỗi người vẫn có không gian phát triển.,FLAG_RELATIONSHIP_PLANNED
+LS-010-E2,LS-010,Đoạn đường khác nhau,mục tiêu sống dần khác biệt,Mối quan hệ kết thúc mà không nhất thiết biến thành thù hận.,FLAG_RELATIONSHIP_ENDED_RESPECTFULLY
+LS-010-E3,LS-010,Hy sinh không được thấu hiểu,một người từ bỏ mục tiêu mà không có thỏa thuận rõ,Bất mãn tích tụ và cần được giải quyết trước khi quan hệ có thể ổn định.,FLAG_RELATIONSHIP_RESENTMENT
+LS-010-E4,LS-010,Ngày gặp lại,hai người tiếp tục trưởng thành độc lập,"Hai người có thể tái kết nối sau này, nhưng không có bảo đảm rằng họ sẽ quay lại với nhau.",FLAG_RELATIONSHIP_OPEN_FUTURE
+LS-011-E1,LS-011,Thành công theo kỳ vọng,nhân vật tìm được ý nghĩa trong con đường hiện tại,Nhân vật có tiến triển nghề nghiệp nhưng vẫn cần xác định điều gì thực sự có ý nghĩa với mình.,FLAG_CAREER_PATH_ACCEPTED
+LS-011-E2,LS-011,Con đường tự chọn,nhân vật có kế hoạch và chấp nhận rủi ro,"Nhân vật giành quyền tự quyết, nhưng kết quả nghề nghiệp còn chưa chắc chắn.",FLAG_CAREER_PIVOT
+LS-011-E3,LS-011,Thỏa hiệp trưởng thành,các bên trao đổi kỳ vọng và giới hạn,Gia đình có thể chấp nhận sự khác biệt sau khi thấy kế hoạch cụ thể.,FLAG_FAMILY_EXPECTATIONS_NEGOTIATED
+LS-011-E4,LS-011,Tự do với khoảng cách,nhân vật ưu tiên tự chủ và gia đình không chấp nhận,Nhân vật tự quyết định tương lai nhưng quan hệ gia đình cần thời gian để hàn gắn.,FLAG_FAMILY_DISTANCE
+LS-012-E1,LS-012,Chuộc lỗi,nhân vật thay đổi hành vi bền vững,Nhân vật thực hiện việc sửa sai; người bị tổn thương vẫn có quyền không tha thứ.,FLAG_ACCOUNTABILITY_ACCEPTED
+LS-012-E2,LS-012,Lời xin lỗi muộn,hai bên hiểu nhau nhưng không muốn khôi phục quan hệ,Sự thật được nói ra nhưng quan hệ cũ không trở lại.,FLAG_OLD_RELATIONSHIP_CLOSED
+LS-012-E3,LS-012,Lặp lại quá khứ,nhân vật tiếp tục tự biện minh hoặc tránh né,Cơ hội đối diện quá khứ trôi qua; cảm giác chưa giải quyết có thể tiếp tục ảnh hưởng nhân vật.,FLAG_GUILT_UNRESOLVED
+LS-012-E4,LS-012,Bắt đầu lại từ xa,các bên giữ ranh giới và thay đổi kỳ vọng,"Một mối quan hệ mới có thể hình thành với giới hạn rõ ràng, không nhất thiết giống quan hệ cũ.",FLAG_RELATIONSHIP_REBUILT

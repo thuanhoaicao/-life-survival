@@ -1,0 +1,49 @@
+﻿choice_id,story_id,choice_text,requirements_json,effects_json,risk,outcome_pool
+LS-001-A,LS-001,Trả một phần khoản nợ bằng tiền dự phòng,"{""cash"": 40}","{""cash"": -40, ""family_trust"": 5, ""stress"": 8}",medium,E1; E2
+LS-001-B,LS-001,Yêu cầu cha nói rõ toàn bộ sự việc rồi cùng thương lượng,{},"{""family_trust"": 3, ""time"": -1, ""stress"": 4}",medium,E1; E3
+LS-001-C,LS-001,Từ chối gánh khoản nợ và đặt ranh giới rõ ràng,{},"{""family_trust"": -8, ""autonomy"": 5, ""stress"": 5}",medium,E3; E4
+LS-001-D,LS-001,Che giấu khoản nợ để bảo vệ danh dự gia đình,{},"{""family_trust"": 2, ""stress"": 7}",high,E2; E4
+LS-002-A,LS-002,Tôn trọng di chúc hiện có,{},"{""stress"": 3, ""family_trust"": -2}",low,E1; E2
+LS-002-B,LS-002,Đề nghị ngồi lại để thống nhất cách chia công bằng với mọi người,{},"{""time"": -1, ""family_trust"": 5, ""stress"": 4}",medium,E1; E3
+LS-002-C,LS-002,Yêu cầu tư vấn pháp lý độc lập,"{""cash"": 10}","{""cash"": -10, ""clarity"": 8, ""stress"": 5}",medium,E2; E4
+LS-002-D,LS-002,Từ bỏ phần thừa kế để chấm dứt tranh chấp,{},"{""wealth"": -10, ""autonomy"": 4, ""stress"": 2}",medium,E3; E4
+LS-003-A,LS-003,Nghỉ việc để tự chăm sóc toàn thời gian,{},"{""cash"": -15, ""care_quality"": 8, ""energy"": -15, ""stress"": 8}",high,E1; E3
+LS-003-B,LS-003,Phân chia lịch chăm sóc và trách nhiệm với gia đình,{},"{""time"": -2, ""family_trust"": 5, ""stress"": 3}",medium,E1; E2
+LS-003-C,LS-003,Tìm dịch vụ hỗ trợ phù hợp với khả năng tài chính,"{""cash"": 20}","{""cash"": -20, ""energy"": 5, ""care_quality"": 5}",medium,E2; E4
+LS-003-D,LS-003,Tìm kiếm hỗ trợ cộng đồng hoặc xã hội,{},"{""time"": -1, ""social_support"": 8, ""stress"": 2}",medium,E2; E3
+LS-004-A,LS-004,Giảm giá mạnh để kéo khách quay lại,{},"{""cash"": -10, ""customers"": 8, ""profit_margin"": -8}",high,E1; E2
+LS-004-B,LS-004,Chuyển sang dịch vụ chuyên biệt,"{""skill"": 45}","{""cash"": -8, ""skills"": 5, ""customers"": 4, ""time"": -2}",medium,E1; E3
+LS-004-C,LS-004,Thương lượng với chủ nhà và nhà cung cấp,{},"{""time"": -1, ""trust_business"": 4, ""stress"": 3}",medium,E2; E3
+LS-004-D,LS-004,Đóng cửa có kế hoạch và tìm nguồn thu mới,{},"{""cash"": -5, ""stress"": -3, ""autonomy"": 5}",medium,E3; E4
+LS-005-A,LS-005,Làm theo yêu cầu,{},"{""career"": 8, ""integrity"": -10, ""stress"": 6}",high,E1; E4
+LS-005-B,LS-005,Từ chối và lưu lại bằng chứng phù hợp,{},"{""integrity"": 8, ""stress"": 5, ""career"": -2}",medium,E2; E3
+LS-005-C,LS-005,Hỏi rõ cơ sở của số liệu và yêu cầu hướng dẫn bằng văn bản,{},"{""clarity"": 8, ""stress"": 2, ""time"": -1}",medium,E2; E3
+LS-005-D,LS-005,Tìm kênh báo cáo độc lập và cân nhắc an toàn,{},"{""integrity"": 8, ""stress"": 6, ""career"": -3}",high,E2; E4
+LS-006-A,LS-006,Nhường quyền quyết định để giữ hòa khí,{},"{""relationship_friend"": 4, ""autonomy"": -5, ""stress"": 4}",medium,E1; E4
+LS-006-B,LS-006,Thiết lập minh bạch tài chính và thỏa thuận vai trò,{},"{""time"": -1, ""trust_business"": 8, ""stress"": 3}",medium,E1; E2
+LS-006-C,LS-006,Tách công việc nhưng cố giữ tình bạn,{},"{""business_value"": -5, ""relationship_friend"": 3, ""stress"": 4}",medium,E2; E3
+LS-006-D,LS-006,Chấm dứt hợp tác theo thỏa thuận,{},"{""business_value"": -8, ""autonomy"": 5, ""stress"": 5}",medium,E3; E4
+LS-007-A,LS-007,Ưu tiên đưa người dễ bị tổn thương đến nơi an toàn,{},"{""energy"": -10, ""community_trust"": 8, ""safety"": 8}",medium,E1; E2
+LS-007-B,LS-007,Bảo vệ tài sản trong khi theo dõi đường thoát,{},"{""property"": 5, ""energy"": -5, ""safety"": -2}",high,E2; E3
+LS-007-C,LS-007,"Tổ chức chia sẻ thuyền, thuốc và thực phẩm","{""social_support"": 20}","{""community_trust"": 10, ""resources"": -5, ""coordination"": 8}",medium,E1; E4
+LS-007-D,LS-007,Rời đi sớm khi tuyến đường còn an toàn,{},"{""safety"": 8, ""property"": -3, ""energy"": -5}",low,E2; E4
+LS-008-A,LS-008,Phân phát theo thứ tự đăng ký,{},"{""transparency"": 6, ""fairness"": 4, ""flexibility"": -2}",medium,E1; E2
+LS-008-B,LS-008,Ưu tiên theo mức độ khẩn cấp đã xác minh,"{""coordination"": 30}","{""fairness"": 8, ""coordination"": -2, ""stress"": 5}",medium,E1; E3
+LS-008-C,LS-008,Dành phần dự phòng cho trường hợp chưa được thống kê,{},"{""flexibility"": 5, ""transparency"": -2, ""stress"": 3}",medium,E2; E3
+LS-008-D,LS-008,Mời nhóm độc lập kiểm tra danh sách và giám sát,{},"{""transparency"": 8, ""time"": -1, ""trust"": 6}",low,E1; E4
+LS-009-A,LS-009,Công khai bênh vực người bị nghi ngờ,{},"{""solidarity"": 6, ""reputation_risk"": 4, ""stress"": 3}",medium,E1; E2
+LS-009-B,LS-009,Chờ thêm thông tin trước khi kết luận,{},"{""accuracy"": 5, ""time"": -1, ""solidarity"": -1}",low,E1; E3
+LS-009-C,LS-009,Tìm chứng cứ độc lập và khuyến khích quy trình xác minh,"{""skill"": 30}","{""accuracy"": 8, ""time"": -2, ""trust"": 5}",medium,E1; E4
+LS-009-D,LS-009,Khai thác tin đồn để đạt lợi ích cá nhân,{},"{""short_term_gain"": 5, ""integrity"": -10, ""reputation_risk"": 8}",high,E2; E4
+LS-010-A,LS-010,Đi cùng người yêu,"{""cash"": 30}","{""cash"": -20, ""relationship_partner"": 8, ""career"": -3}",medium,E1; E3
+LS-010-B,LS-010,Yêu xa với thời hạn và kế hoạch rõ ràng,{},"{""relationship_partner"": 5, ""stress"": 5, ""career"": 5}",medium,E1; E2
+LS-010-C,LS-010,Đề nghị một người thay đổi kế hoạch sau khi cùng đánh giá lựa chọn,{},"{""clarity"": 5, ""stress"": 4, ""relationship_partner"": 2}",medium,E2; E3
+LS-010-D,LS-010,Chia tay trong sự tôn trọng,{},"{""stress"": 8, ""autonomy"": 6, ""relationship_partner"": -10}",medium,E3; E4
+LS-011-A,LS-011,Tiếp tục con đường gia đình đã chọn,{},"{""family_trust"": 5, ""autonomy"": -4, ""career"": 3}",low,E1; E3
+LS-011-B,LS-011,Chuyển hướng ngay lập tức,"{""cash"": 25}","{""cash"": -15, ""autonomy"": 8, ""stress"": 6}",high,E2; E4
+LS-011-C,LS-011,Thỏa thuận một giai đoạn thử nghiệm có mục tiêu cụ thể,{},"{""clarity"": 7, ""family_trust"": 3, ""time"": -2}",medium,E2; E3
+LS-011-D,LS-011,Giữ công việc hiện tại để tích lũy nguồn lực rồi chuyển hướng,{},"{""cash"": 8, ""autonomy"": 2, ""energy"": -5}",medium,E1; E4
+LS-012-A,LS-012,Thừa nhận lỗi và xin lỗi mà không đòi hỏi tha thứ,{},"{""integrity"": 8, ""stress"": 4, ""relationship_old_friend"": 3}",medium,E1; E2
+LS-012-B,LS-012,Giải thích hoàn cảnh nhưng vẫn nhận trách nhiệm,{},"{""clarity"": 5, ""integrity"": 4, ""stress"": 3}",medium,E1; E3
+LS-012-C,LS-012,Né tránh vì chưa sẵn sàng đối diện,{},"{""stress"": -2, ""relationship_old_friend"": -5}",medium,E3; E4
+LS-012-D,LS-012,Đề nghị sửa chữa hậu quả bằng hành động cụ thể,{},"{""time"": -2, ""integrity"": 8, ""relationship_old_friend"": 5}",medium,E1; E2
