@@ -1,3 +1,5 @@
+Đã viết mã
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -5,87 +7,75 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LIFE SURVIVAL</title>
 <style>
-:root{color-scheme:dark;--bg:#0b1117;--card:#16222c;--accent:#34d399;--danger:#f87171;--muted:#8b949e;--border:#30363d}
+:root{color-scheme:dark;--bg:#101820;--card:#1c2935;--accent:#70e0ad;--muted:#a9bbc8}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:#c9d1d9;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.5}
-header{padding:20px 16px;background:#111b24;border-bottom:1px solid var(--border);text-align:center}
-h1{margin:0;color:var(--accent);font-size:26px;letter-spacing:1.5px}
-header p{color:var(--muted);margin:6px 0 0;font-size:14px}
-main{max-width:720px;margin:auto;padding:16px}
-.card{background:var(--card);padding:18px;border-radius:12px;margin-bottom:14px;border:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
-h2{font-size:19px;margin-top:0;color:#f0f6fc}
-.muted{color:var(--muted);font-size:13px}
-.stats{display:grid;grid-template-columns:repeat(2, 1fr);gap:10px}
-.stat{background:#0d151c;padding:10px 12px;border-radius:8px;border:1px solid var(--border)}
-.stat-header{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:6px}
-progress{width:100%;height:8px;border-radius:4px;overflow:hidden;appearance:none}
-progress::-webkit-progress-bar{background:#21262d;border-radius:4px}
-progress::-webkit-progress-value{background:var(--accent);border-radius:4px}
-button{width:100%;padding:13px;margin-top:8px;border:0;border-radius:8px;background:var(--accent);color:#07120e;font-size:15px;font-weight:700;cursor:pointer;transition:opacity 0.2s}
-button:hover{opacity:0.9}
-button.secondary{background:#21262d;color:#c9d1d9;border:1px solid var(--border)}
-button:disabled{opacity:0.3;cursor:not-allowed}
-.choice{text-align:left;background:#1f2933;color:#f0f6fc;border:1px solid #374151}
-.choice:hover:not(:disabled){background:#2d3748}
-.choice small{display:block;color:#9ca3af;font-weight:400;margin-top:4px}
-.error{color:var(--danger);white-space:pre-wrap;font-size:14px;background:#2d1517;padding:10px;border-radius:8px;border:1px solid #7f1d1d;margin-top:10px}
-footer{text-align:center;padding:16px;color:var(--muted);font-size:12px}
+body{margin:0;background:var(--bg);color:#f4f7fa;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+header{padding:24px 18px;background:#172b38;border-bottom:1px solid #354653}
+h1{margin:0;color:var(--accent);font-size:27px;letter-spacing:2px}
+header p{color:var(--muted);margin-bottom:0}
+main{max-width:760px;margin:auto;padding:16px}
+.card{background:var(--card);padding:17px;border-radius:15px;margin-bottom:14px;border:1px solid #344654}
+h2{font-size:21px;margin-top:0}
+.muted{color:var(--muted);font-size:14px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#101c26;padding:12px;border-radius:10px}
+.stat strong{display:block;margin-bottom:8px}
+progress{width:100%;height:12px;accent-color:var(--accent)}
+button{width:100%;padding:14px;margin-top:9px;border:0;border-radius:10px;background:var(--accent);color:#10221a;font-size:16px;font-weight:700}
+button.secondary{background:#344957;color:white}
+button:disabled{opacity:.4}
+.choice{text-align:left;background:#293c4a;color:white;border:1px solid #496171}
+.choice small{display:block;color:#c4d3dc;font-weight:400;margin-top:6px}
+.notice{padding:12px;border-radius:10px;background:#253d3a;color:#d9fff0}
+.error{color:#ffb8b8;white-space:pre-wrap}
+footer{text-align:center;padding:18px;color:var(--muted);font-size:12px}
 </style>
 </head>
 <body>
 <header>
   <h1>LIFE SURVIVAL</h1>
-  <p>Mỗi năm là một thử thách. Mỗi quyết định định đoạt sự sống còn.</p>
+  <p>Mỗi năm là một câu chuyện. Mỗi lựa chọn đều có cái giá của nó.</p>
 </header>
 <main>
   <section class="card">
-    <div id="status" class="muted">Đang khởi tạo hệ thống dữ liệu...</div>
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-      <h2 id="yearTitle" style="margin:0;">Năm 1 · Tuổi 18</h2>
-    </div>
-    <div class="stats" id="stats" style="margin-top:12px;"></div>
+    <div id="status" class="muted">Đang tải dữ liệu...</div>
+    <h2 id="yearTitle">Năm 1</h2>
+    <div class="stats" id="stats"></div>
   </section>
 
-  <section class="card" id="storyCard">
+  <section class="card">
     <div class="muted" id="storyType">CỐT TRUYỆN</div>
-    <h2 id="storyTitle">Đang tải...</h2>
-    <p id="storySummary">Đang phân tích dữ liệu từ kho lưu trữ...</p>
+    <h2 id="storyTitle">Đang chuẩn bị...</h2>
+    <p id="storySummary">Đang đọc kho dữ liệu của bạn.</p>
     <p class="muted" id="storyMeta"></p>
   </section>
 
-  <section class="card" id="choiceCard">
-    <h2>Hành động của bạn</h2>
+  <section class="card">
+    <h2>Bạn sẽ làm gì?</h2>
     <div id="choices"></div>
   </section>
 
   <section class="card" id="resultCard" hidden>
-    <h2 id="resultTitle">Kết quả năm</h2>
-    <p id="resultText" style="white-space: pre-line;"></p>
-    <button id="nextBtn">Tiếp tục hành trình sang năm sau</button>
-  </section>
-
-  <section class="card" id="gameOverCard" hidden style="border-color: #7f1d1d; background: #221113;">
-    <h2 style="color: var(--danger);">💀 BẠN ĐÃ GỤC NGÃ</h2>
-    <p id="gameOverReason">Hành trình sinh tồn của bạn đã kết thúc do kiệt quệ tài nguyên.</p>
-    <button class="secondary" id="restartBtn" style="background:#7f1d1d; color:white;">Chơi lại từ đầu</button>
+    <h2 id="resultTitle">Kết quả</h2>
+    <p id="resultText"></p>
+    <button id="nextBtn">Bước sang năm tiếp theo</button>
   </section>
 
   <section class="card">
-    <h2>Lịch sử sinh tồn</h2>
-    <p id="history" class="muted">Chưa có sự kiện nào xảy ra.</p>
-    <button class="secondary" id="resetBtn">Đặt lại toàn bộ dữ liệu</button>
+    <h2>Tiến trình</h2>
+    <p id="history" class="muted">Chưa có lựa chọn nào.</p>
+    <button class="secondary" id="resetBtn">Bắt đầu lại từ đầu</button>
   </section>
 
-  <div id="error" class="error" hidden></div>
+  <p id="error" class="error"></p>
 </main>
-<footer>LIFE SURVIVAL · GitHub Pages Edition</footer>
+<footer>LIFE SURVIVAL · Bản thử nghiệm cá nhân</footer>
 
 <script>
-// Khớp chính xác với tên 3 tệp Glide_*.csv trên kho GitHub của bạn
 const FILES = {
-  stories: "Glide_Stories.csv",
-  choices: "Glide_Choices.csv",
-  endings: "Glide_Endings.csv"
+  stories: "Stories.csv",
+  choices: "Choices.csv",
+  endings: "Endings.csv"
 };
 
 const initialState = () => ({
@@ -100,9 +90,7 @@ const initialState = () => ({
   currentStoryId: null,
   usedStories: [],
   history: [],
-  endedYear: false,
-  isGameOver: false,
-  deathReason: ""
+  endedYear: false
 });
 
 let data = { stories: [], choices: [], endings: [] };
@@ -124,10 +112,15 @@ function parseCSV(text) {
 
   for (let i = 0; i < text.length; i++) {
     const c = text[i];
+
     if (quoted) {
-      if (c === '"' && text[i + 1] === '"') { field += '"'; i++; }
-      else if (c === '"') { quoted = false; }
-      else { field += c; }
+      if (c === '"' && text[i + 1] === '"') {
+        field += '"'; i++;
+      } else if (c === '"') {
+        quoted = false;
+      } else {
+        field += c;
+      }
     } else if (c === '"' && field === "") {
       quoted = true;
     } else if (c === ",") {
@@ -141,12 +134,15 @@ function parseCSV(text) {
       field += c;
     }
   }
+
   if (field !== "" || row.length) {
     row.push(field);
     if (row.some(v => v.trim() !== "")) rows.push(row);
   }
+
   if (!rows.length) return [];
   const headers = rows.shift().map(h => h.trim());
+
   return rows.map(values => {
     const obj = {};
     headers.forEach((h, i) => obj[h] = (values[i] ?? "").trim());
@@ -175,18 +171,17 @@ function parseJSON(text) {
 }
 
 async function loadCSV(filename) {
-  const response = await fetch(filename + "?v=" + Date.now(), {cache:"no-store"});
+  const response = await fetch(filename + "?v=1", {cache:"no-store"});
   if (!response.ok) {
-    throw new Error("Không thể tải tệp: " + filename + " (Mã lỗi: " + response.status + "). Hãy kiểm tra lại tên tệp trên GitHub có khớp hoàn toàn không.");
+    throw new Error("Không đọc được " + filename +
+      ". Hãy kiểm tra tên file và vị trí trong GitHub.");
   }
   return parseCSV(await response.text());
 }
 
 async function start() {
-  const statusEl = document.getElementById("status");
-  const errorEl = document.getElementById("error");
-  errorEl.hidden = true;
-  statusEl.textContent = "Đang tải dữ liệu từ 3 tệp CSV...";
+  document.getElementById("error").textContent = "";
+  document.getElementById("status").textContent = "Đang tải ba file CSV...";
 
   try {
     const [stories, choices, endings] = await Promise.all([
@@ -196,37 +191,38 @@ async function start() {
     ]);
 
     if (!stories.length || !choices.length || !endings.length) {
-      throw new Error("Một trong các tệp CSV đang trống hoặc không có dòng tiêu đề hợp lệ.");
+      throw new Error("Có file CSV chưa có dữ liệu hoặc tiêu đề cột.");
     }
 
     data = {stories, choices, endings};
-    const saved = localStorage.getItem("lifeSurvivalSave_v3");
+    const saved = localStorage.getItem("lifeSurvivalSave");
     state = saved ? JSON.parse(saved) : initialState();
 
-    statusEl.textContent = `Đã tải thành công: ${stories.length} cốt truyện · ${choices.length} lựa chọn · ${endings.length} kết thúc`;
+    document.getElementById("status").textContent =
+      `Đã tải ${stories.length} cốt truyện · ${choices.length} lựa chọn · ${endings.length} kết thúc`;
 
     if (!state.currentStoryId || state.endedYear) {
-      if (!state.endedYear && !state.isGameOver) chooseStory();
+      if (!state.endedYear) chooseStory();
     }
     render();
   } catch (err) {
-    statusEl.textContent = "Lỗi khi tải dữ liệu!";
-    errorEl.textContent = err.message;
-    errorEl.hidden = false;
+    document.getElementById("status").textContent = "Chưa thể tải dữ liệu";
+    document.getElementById("error").textContent =
+      err.message + "\n\nHãy kiểm tra lại tên ba file CSV và xem chúng có nằm cùng thư mục với index.html không.";
   }
 }
 
 function save() {
-  localStorage.setItem("lifeSurvivalSave_v3", JSON.stringify(state));
+  localStorage.setItem("lifeSurvivalSave", JSON.stringify(state));
 }
 
 function chooseStory() {
-  if (state.isGameOver) return;
   const available = data.stories.filter(s => {
     const id = storyId(s);
-    const min = Number(value(s, "tuổi tối thiểu", "tuoi toi thieu", "min_age") || 0);
-    const max = Number(value(s, "tuổi tối đa", "tuoi toi da", "max_age") || 999);
-    return id && !state.usedStories.includes(id) && state.age >= min && state.age <= max;
+    const min = Number(value(s, "tuổi tối thiểu", "tuoi toi thieu") || 0);
+    const max = Number(value(s, "tuổi tối đa", "tuoi toi da") || 999);
+    return id && !state.usedStories.includes(id) &&
+      state.age >= min && state.age <= max;
   });
 
   const pool = available.length ? available : data.stories.filter(s =>
@@ -248,30 +244,11 @@ function chooseStory() {
 }
 
 function currentStory() {
-  const currentId = String(state.currentStoryId || "").trim();
-  return data.stories.find(s => String(storyId(s) || "").trim() === currentId);
+  return data.stories.find(s => storyId(s) === state.currentStoryId);
 }
 
 function clamp(n) {
   return Math.max(0, Math.min(100, n));
-}
-
-function checkGameOver() {
-  if (state.health <= 0) {
-    triggerGameOver("Sức khỏe của bạn đã cạn kiệt hoàn toàn.");
-  } else if (state.food <= 0) {
-    triggerGameOver("Bạn đã chết đói do thiếu lương thực trầm trọng.");
-  } else if (state.water <= 0) {
-    triggerGameOver("Bạn đã gục ngã do mất nước.");
-  } else if (state.energy <= 0) {
-    triggerGameOver("Thể lực kiệt quệ khiến bạn không thể tiếp tục.");
-  }
-}
-
-function triggerGameOver(reason) {
-  state.isGameOver = true;
-  state.deathReason = reason;
-  save();
 }
 
 function applyEffects(text) {
@@ -279,7 +256,7 @@ function applyEffects(text) {
   if (!effects || typeof effects !== "object") return;
 
   const aliases = {
-    health:["health","suc_khoe","mau"],
+    health:["health","suc_khoe","suc_khoe","máu"],
     energy:["energy","nang_luong","the_luc"],
     food:["food","thuc_an","luong_thuc"],
     water:["water","nuoc"],
@@ -306,7 +283,6 @@ function applyEffects(text) {
     }
   }
   walk(effects);
-  checkGameOver();
 }
 
 function renderStats() {
@@ -315,12 +291,9 @@ function renderStats() {
     water:"Nước", money:"Tiền bạc", mood:"Tinh thần"
   };
   document.getElementById("stats").innerHTML =
-    Object.entries(labels).map(([key, label]) => `
+    Object.entries(labels).map(([key,label]) => `
       <div class="stat">
-        <div class="stat-header">
-          <span>${label}</span>
-          <span>${state[key]}%</span>
-        </div>
+        <strong>${label}: ${state[key]}</strong>
         <progress max="100" value="${state[key]}"></progress>
       </div>`).join("");
 }
@@ -329,109 +302,105 @@ function render() {
   if (!state) return;
   renderStats();
 
-  document.getElementById("yearTitle").textContent = `Năm ${state.year} · Tuổi ${state.age}`;
-
-  if (state.isGameOver) {
-    document.getElementById("storyCard").hidden = true;
-    document.getElementById("choiceCard").hidden = true;
-    document.getElementById("resultCard").hidden = true;
-    document.getElementById("gameOverCard").hidden = false;
-    document.getElementById("gameOverReason").textContent = state.deathReason;
-    return;
-  }
+  document.getElementById("yearTitle").textContent =
+    `Năm ${state.year} · Tuổi ${state.age}`;
 
   const story = currentStory();
   if (!story) {
-    document.getElementById("error").textContent = "Không tìm thấy cốt truyện tương ứng với ID hiện tại trong Glide_Stories.csv.";
-    document.getElementById("error").hidden = false;
+    document.getElementById("error").textContent =
+      "Không tìm thấy cốt truyện. Hãy kiểm tra cột story_id trong Stories.csv.";
     return;
   }
 
-  document.getElementById("storyTitle").textContent = value(story, "tiêu đề", "tieu de", "title") || state.currentStoryId;
-  document.getElementById("storyType").textContent = value(story, "loại", "loai", "type") || "CỐT TRUYỆN";
-  document.getElementById("storySummary").textContent = value(story, "bản tóm tắt", "ban tom tat", "summary", "mo ta") || "Đứng trước ngã rẽ cuộc đời...";
-  document.getElementById("storyMeta").textContent = "Mã sự kiện: " + state.currentStoryId;
+  document.getElementById("storyTitle").textContent =
+    value(story, "tiêu đề", "tieu de", "title") || state.currentStoryId;
+  document.getElementById("storyType").textContent =
+    value(story, "loại", "loai", "type") || "CỐT TRUYỆN";
+  document.getElementById("storySummary").textContent =
+    value(story, "bản tóm tắt", "ban tom tat", "summary", "mô tả", "mo ta") ||
+    "Bạn đang đứng trước một bước ngoặt. Hãy cân nhắc lựa chọn của mình.";
+  document.getElementById("storyMeta").textContent =
+    "Mã truyện: " + state.currentStoryId;
 
-  const currentId = String(state.currentStoryId || "").trim();
-  const choices = data.choices.filter(c => String(value(c, "story_id", "story id") || "").trim() === currentId);
+  const choices = data.choices.filter(c =>
+    value(c, "story_id", "story id") === state.currentStoryId
+  );
 
   const holder = document.getElementById("choices");
   holder.innerHTML = "";
 
   if (state.endedYear) {
-    holder.textContent = "Bạn đã hoàn thành quyết định cho năm này.";
+    holder.textContent = "Bạn đã hoàn thành năm này.";
     return;
   }
 
   if (!choices.length) {
-    holder.textContent = "Không tìm thấy lựa chọn nào cho cốt truyện này trong Glide_Choices.csv.";
+    holder.textContent = "Chưa tìm thấy lựa chọn cho cốt truyện này.";
     return;
   }
 
   choices.forEach((choice, i) => {
     const btn = document.createElement("button");
     btn.className = "choice";
-    
-    const choiceText = value(
-      choice, "văn bản lựa chọn", "van ban lua chon", "noi dung lua chon",
-      "ten lua chon", "choice_text", "text", "description", "choice"
-    );
-
-    btn.textContent = (i + 1) + ". " + (choiceText || value(choice, "choice_id") || "Hành động");
+    btn.textContent = (i + 1) + ". " +
+      (value(choice, "văn bản lựa chọn", "van ban lua chon", "choice") ||
+       value(choice, "choice_id", "choice id") || "Lựa chọn");
 
     const risk = value(choice, "rủi ro", "rui ro", "risk");
     if (risk) {
       const small = document.createElement("small");
-      small.textContent = "Mức độ rủi ro: " + risk;
+      small.textContent = "Rủi ro: " + risk;
       btn.appendChild(small);
     }
-    
     btn.onclick = () => makeChoice(choice);
     holder.appendChild(btn);
   });
 }
 
 function makeChoice(choice) {
-  if (state.endedYear || state.isGameOver) return;
+  if (state.endedYear) return;
 
   applyEffects(value(choice, "effects_json", "effects json"));
-  
-  const chosenText = value(choice, "văn bản lựa chọn", "van ban lua chon", "choice") || "Lựa chọn hành động";
   state.history.push({
     year: state.year,
     story: state.currentStoryId,
-    choice: chosenText
+    choice: value(choice, "văn bản lựa chọn", "van ban lua chon", "choice") ||
+      value(choice, "choice_id", "choice id")
   });
 
-  if (state.isGameOver) {
-    render();
-    return;
-  }
+  const endings = data.endings.filter(e =>
+    value(e, "story_id", "story id") === state.currentStoryId
+  );
 
-  const endings = data.endings.filter(e => String(value(e, "story_id", "story id") || "").trim() === state.currentStoryId);
-  let ending = endings.length ? endings[Math.floor(Math.random() * endings.length)] : null;
+  let ending = null;
+  if (endings.length) {
+    ending = endings[Math.floor(Math.random() * endings.length)];
+  }
 
   document.getElementById("resultCard").hidden = false;
-  document.getElementById("resultTitle").textContent = ending ? (value(ending, "tiêu đề kết thúc", "title") || "Kết quả năm " + state.year) : "Tổng kết năm " + state.year;
-  
-  let resultDesc = ending ? (value(ending, "kết quả", "ket qua", "result") || "Quyết định đã đưa ra những chuyển biến rõ rệt.") : "Năm tháng trôi qua, hậu quả từ quyết định của bạn bắt đầu xuất hiện.";
-  
+  document.getElementById("resultTitle").textContent =
+    ending ? value(ending, "tiêu đề kết thúc", "tieu de ket thuc", "title") ||
+      "Kết thúc năm " + state.year : "Năm " + state.year + " đã khép lại";
+
+  document.getElementById("resultText").textContent =
+    ending ? value(ending, "kết quả", "ket qua", "result") ||
+      "Lựa chọn của bạn đã để lại dấu ấn." :
+      "Bạn đã đưa ra lựa chọn. Hãy chuẩn bị cho năm tiếp theo.";
+
   const flag = ending ? value(ending, "cờ chuyển tiếp", "co chuyen tiep") : "";
   if (flag) {
-    resultDesc += "\n\n🔖 Nhận được cột mốc quan trọng: " + flag;
+    document.getElementById("resultText").textContent +=
+      "\nCờ chuyển tiếp: " + flag;
   }
-
-  document.getElementById("resultText").textContent = resultDesc;
 
   state.endedYear = true;
   save();
   renderStats();
-  document.getElementById("choices").innerHTML = "Đã hoàn thành năm hiện tại.";
-  
+  document.getElementById("choices").innerHTML = "";
   document.getElementById("history").textContent =
-    state.history.slice(-5).reverse().map(h =>
-      `Năm ${h.year} [${h.story}]: ${h.choice}`
-    ).join("\n") || "Chưa có lịch sử.";
+    state.history.slice(-5).map(h =>
+      `Năm ${h.year}: ${h.story} — ${h.choice}`
+    ).join("\n") || "Chưa có lựa chọn nào.";
   document.getElementById("history").style.whiteSpace = "pre-line";
 }
 
@@ -443,26 +412,18 @@ document.getElementById("nextBtn").onclick = () => {
   document.getElementById("resultCard").hidden = true;
 
   ["health","energy","food","water","money","mood"].forEach(k => {
-    const drain = (k === "money" || k === "mood") ? 1 : 3;
-    state[k] = clamp(state[k] - drain);
+    state[k] = clamp(state[k] - 2);
   });
 
-  checkGameOver();
-  if (!state.isGameOver) {
-    chooseStory();
-  }
+  chooseStory();
   render();
 };
 
-document.getElementById("restartBtn").onclick =
 document.getElementById("resetBtn").onclick = () => {
-  if (!confirm("Bạn có chắc chắn muốn xóa sạch tiến trình hiện tại để chơi lại từ đầu không?")) return;
-  localStorage.removeItem("lifeSurvivalSave_v3");
+  if (!confirm("Bạn có chắc muốn xóa tiến trình trên thiết bị này và chơi lại từ đầu?")) return;
+  localStorage.removeItem("lifeSurvivalSave");
   state = initialState();
   document.getElementById("resultCard").hidden = true;
-  document.getElementById("gameOverCard").hidden = true;
-  document.getElementById("storyCard").hidden = false;
-  document.getElementById("choiceCard").hidden = false;
   chooseStory();
   render();
 };
